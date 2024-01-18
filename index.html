@@ -7,27 +7,35 @@
     <title>Document</title>
 
     <script defer type="module" src="./main.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="display: flex; justify-content: center;">
+<body>
 
-    <div style="margin: 10vh;">
+    <main class="main">
 
-        <h2>Статус</h2>
+        <div class="taimer-box" id="taimer-box">
 
-        <div style="font-size: 50px; text-align: center;" id="taimers"> </div>
+            <h2>Статус</h2>
 
-        <div class="">
-            <button id="startTimer">старт</button>
-            <button id="stopTimer">стоп</button>
+            <div class="taimer" id="taimer"> </div>
 
-            <button id="resetTimer">перезапустить</button>
-            <button id="skipIteration">пропустить</button>
+            <div id="controls">
+                <button data-action="startTimer">старт</button>
+                <button data-action="stopTimer">стоп</button>
+
+                <button data-action="resetTimer">перезапустить</button>
+                <button data-action="skipIteration">пропустить</button>
+
+                <button data-action="settings">настройки</button>
+            </div>
+
+            <br>
         </div>
 
-        <br>
+        <div id="settings" class="settings">
+            <h2>Настройки <span id="closeSettings">❌</span></h2>
 
-        <div style="display: grid;">
             <label for="">
                 <span id="valueTimer"></span>
                 - Время работы
@@ -51,9 +59,11 @@
                 - Количество итераций
             </label>
             <input min="1" max="90" id="inputRounds" type="range">
-        </div>
-    </div>
 
+            <button>Сохранить</button>
+        </div>
+
+    </main>
 
 
 </body>

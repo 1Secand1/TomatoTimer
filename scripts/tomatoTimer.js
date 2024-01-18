@@ -68,8 +68,8 @@ export class TomatoTimer extends Timer {
 
     const breakTime =
       rounds >= 2 &&
-      this.#currentRound + 1 > rounds &&
-      this.#currentInterval == 1
+        this.#currentRound + 1 > rounds &&
+        this.#currentInterval == 1
         ? longBreak
         : shortBreak;
 
@@ -89,18 +89,4 @@ export class TomatoTimer extends Timer {
     element.innerText = statuses[nameStatus];
   }
 
-  setTheTimerControl(idStart, idStop, idReset, idSkip) {
-    const idControlElements = [idStart, idStop, idReset, idSkip];
-    const events = [
-      this.startTomatoTimer.bind(this),
-      this.stopTimer.bind(this),
-      this.resetTomatoTimer.bind(this),
-      this.skipIteration.bind(this),
-    ];
-
-    idControlElements.forEach((idControlElement, index) => {
-      const controlElement = document.getElementById(idControlElement);
-      controlElement.addEventListener("click", events[index]);
-    });
-  }
 }
