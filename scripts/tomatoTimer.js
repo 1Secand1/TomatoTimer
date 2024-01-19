@@ -6,11 +6,20 @@ export class TomatoTimer extends Timer {
     workTime: 25,
     longBreak: 30,
     shortBreak: 5,
-    rounds: 4,
+    rounds: 2,
+  };
+
+  textStatuses = {
+    workTime: "Время работать",
+    longBreak: "Теперь можно отдохнуть",
+    shortBreak: "Самое время сделать перерыв",
   };
 
   #currentInterval = 0;
   #currentRound = 1;
+  #IdOutputStatus = undefined;
+
+  currentIteration = undefined;
 
   constructor(...argum) {
     super(argum);
@@ -20,7 +29,6 @@ export class TomatoTimer extends Timer {
     };
     this.currentStatus = "";
 
-    this.startRound();
 
     let inputLinker = new linkInputInObject(this.userSettings);
     inputLinker.connect("inputTimer", ["workTime", "valueTimer"]);
@@ -64,29 +72,40 @@ export class TomatoTimer extends Timer {
   }
 
   setCurrentTime() {
-    const { workTime, shortBreak, longBreak, rounds } = this.userSettings;
+    const { rounds } = this.userSettings;
 
-    const breakTime =
-      rounds >= 2 &&
-        this.#currentRound + 1 > rounds &&
-        this.#currentInterval == 1
-        ? longBreak
-        : shortBreak;
+    const isLongBreak = rounds >= 2 && this.#currentRound + 1 > rounds && this.#currentInterval === 1;
+
+    const breakTime = isLongBreak
+      ? "longBreak"
+      : "shortBreak";
+
+    const currentStatus = this.#currentInterval === 0
+      ? "workTime"
+      : breakTime;
+
+    this.currentStatus = currentStatus;
+
+    this.setTime(0, this.userSettings[currentStatus]);
+    this.setStatus(this.currentStatus, this.#IdOutputStatus);
+  }
+
+  restartTimer() {
+    this.#currentInterval = 0;
+    this.#currentRound = 1;
 
     this.stopTimer();
-    this.setTime(0, [workTime, breakTime][this.#currentInterval]);
+    this.setStatus("workTime", this.#IdOutputStatus);
+    this.setTime(0, this.userSettings.workTime);
+  }
+
+  setIdOutputStatus(id) {
+    this.#IdOutputStatus = id;
   }
 
   setStatus(nameStatus, idHtmlElement) {
     const element = document.getElementById(idHtmlElement);
-
-    const statuses = {
-      workTime: "Время работать",
-      longBreak: "Теперь можно немного отдохнуть",
-      shortBreak: "Самое время сделать перерыв",
-    };
-
-    element.innerText = statuses[nameStatus];
+    element.innerText = this.textStatuses[nameStatus];
   }
 
 }

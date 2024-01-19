@@ -16,7 +16,7 @@
 
         <div class="taimer-box" id="taimer-box">
 
-            <h2>Статус</h2>
+            <h2 id="taimerStatus"> </h2>
 
             <div class="taimer" id="taimer"> </div>
 
@@ -27,14 +27,15 @@
                 <button data-action="resetTimer">перезапустить</button>
                 <button data-action="skipIteration">пропустить</button>
 
-                <button data-action="settings">настройки</button>
+                <button data-action="restartTimer">сбросить</button>
+                <button id="openSettings">настройки</button>
             </div>
 
             <br>
         </div>
 
         <div id="settings" class="settings">
-            <h2>Настройки <span id="closeSettings">❌</span></h2>
+            <h2>Настройки <span class="close-settings" id="closeSettings">❌</span></h2>
 
             <label for="">
                 <span id="valueTimer"></span>
@@ -60,7 +61,6 @@
             </label>
             <input min="1" max="90" id="inputRounds" type="range">
 
-            <button>Сохранить</button>
         </div>
 
     </main>
